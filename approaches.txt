@@ -1,0 +1,134 @@
+Documentation
+1.Overview of the Documentation.
+Advanced Question Generation System
+
+This documentation outlines the development process, tools, methodologies, and outcomes of the Advanced Question Generation System. The system generates high-quality multiple-choice and open-ended questions based on textual content extracted from PDF files. By combining Retrieval-Augmented Generation (RAG), vector search, and pre-trained language models, the project delivers:
+- Contextually relevant questions.
+- An intuitive web interface for result visualization.
+- JSON outputs for further analysis and integration.
+
+Key Deliverables
+- Extracted topics from PDF documents.
+- 15 MCQs and 5 open-ended questions per topic.
+- JSON files with structured results.
+
+2.Tools and Frameworks
+
+### Programming Language
+- Python: Chosen for its extensive libraries, ease of use, and suitability for text processing, machine learning, and web development.
+
+Libraries
+1. Hugging Face Transformers:
+   - Provides pre-trained models for text generation.
+   - Allows fine-tuning for domain-specific tasks.
+   - Enabled us to use T5 for generating MCQs and open-ended questions.
+
+2. Sentence-Transformers:
+   - Used to embed textual chunks into vector space for efficient semantic search.
+   - Ensured that relevant context was retrieved from large PDF documents.
+
+3. FAISS:
+   - A fast similarity search library.
+   - Enabled efficient querying of text embeddings, critical for the RAG pipeline.
+
+4. PyPDF2:
+   - Extracted text from PDF files.
+   - Provided flexibility to handle multi-page and complex documents.
+
+5. Flask:
+   - A lightweight web framework for building the front-end.
+   - Allowed us to quickly visualize results in a structured format.
+
+Infrastructure
+- Local Environment: Python-based development for rapid prototyping.
+- GitHub: Repository for version control and collaboration.
+
+3. Approach and methodology
+
+1. Text Extraction
+- Used PyPDF2 to extract text content from the input PDF file.
+- Pre-processed the text by:
+  - Removing unwanted characters.
+  - Splitting the document into smaller, manageable chunks.
+
+ 2. Topic Extraction
+- Passed the extracted text to a pre-trained T5 model with the prompt:
+- Processed the model output to create a structured list of topics.
+
+3. RAG Pipeline
+- Generated embeddings for each text chunk using Sentence-Transformers.
+- Stored these embeddings in FAISS for fast retrieval.
+- Queried FAISS to retrieve the most relevant text for each topic.
+
+ 4. Question Generation
+- Used T5 to generate:
+- 15 MCQs per topic with options, answers, and explanations.
+- 5 open-ended questions per topic with model answers and key points.
+
+5. Front-End Visualization
+- Built a Flask application to display the questions and their details.
+- Integrated Jinja2 templates to dynamically render the content.
+
+
+4.Challenges and Solutions
+
+1. Extracting Clean Text from PDF
+- Challenge: Text extracted from PDF files often contained noise, such as broken sentences or extra whitespace.
+- Solution: Implemented pre-processing steps, including:
+  - Removing special characters.
+  - Splitting text into manageable chunks based on logical breaks.
+
+2. Generating High-Quality Questions
+- Challenge: The model sometimes produced repetitive or incomplete outputs.
+- Solution:
+  - Used beam search decoding to improve output diversity.
+  - Applied manual validation for edge cases.
+
+3. Managing Large Documents
+- Challenge: Processing long documents led to memory issues with FAISS.
+- Solution:
+  - Split the document into smaller chunks and indexed them incrementally.
+  - Used a smaller, faster embedding model to reduce computational load.
+
+4. Building a User-Friendly Interface
+- Challenge: Displaying JSON results in a readable format for non-technical users.
+- Solution:
+  - Built a Flask-based front-end with clearly separated sections for MCQs and open-ended questions.
+  - Styled the page with CSS for better readability.
+
+5.Key Design Decisions
+1. Use of Pre-Trained Models
+- Decision: Used T5 instead of training a model from scratch to save time and resources.
+- Rationale: Pre-trained models are optimized for general tasks and can be fine-tuned for domain-specific needs.
+
+2. JSON Output Format
+- Decision: Saved results in structured JSON files (`topics.json` and `questions.json`).
+- Rationale: JSON format is easy to parse, making it suitable for integration with other systems.
+
+3. Flask for Front-End
+- Decision: Chose Flask over heavier frameworks like Django.
+- Rationale: Flask's simplicity allowed for rapid prototyping and deployment.
+
+4. Embedding Model Selection
+- Decision: Used sentence-transformers/all-MiniLM-L6-v2 for embedding generation.
+- Rationale: This model offers a good trade-off between speed and accuracy, suitable for our document size.
+
+	6.Improvements for Future Iterations	
+
+1. Fine-Tuning the Model
+- Fine-tune T5 or another language model on a custom dataset of project management questions and answers for better domain-specific performance.
+
+2. Richer Front-End Features
+- Add interactive options for users to:
+  - Filter questions by topic.
+  - Export results as CSV or PDF.
+  - Provide feedback on generated questions.
+
+3. Scalability
+- Deploy the system on cloud infrastructure (e.g., AWS, Azure) to handle larger datasets and concurrent users.
+
+4. Support for Multiple Languages
+- Extend the system to generate questions in multiple languages to cater to a global audience.
+
+5. Enhanced Topic Extraction
+- Use advanced unsupervised methods like clustering to identify topics automatically without relying on model prompts.

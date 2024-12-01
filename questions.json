@@ -1,0 +1,19 @@
+{
+    "metadata": {
+        "generated_at": "2024-12-01T08:02:37.320577",
+        "total_questions": 1,
+        "book_title": "Project Management Professional Guide",
+        "tool_used": "t5-base"
+    },
+    "questions": [
+        {
+            "id": "Q1_1",
+            "topic": "True",
+            "type": "MCQ",
+            "question": "Generate 5 multiple-choice questions based on the topic 'True'",
+            "options": [],
+            "correct_answer": null,
+            "page_number": null
+        }
+    ]
+}
